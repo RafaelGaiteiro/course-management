@@ -1,16 +1,20 @@
 import { Box, useDisclosure } from "@chakra-ui/react";
-import { ModalContext } from "./contexts/ModalContext";
+import { NewAccountContext } from "./contexts/NewAccountContext";
 import { Home } from "./pages/Home";
+import { SigninContext } from "./contexts/SigninContext";
 
 const App = () => {
-  const modalDisclosure = useDisclosure();
+  const newAccountDisclosure = useDisclosure();
+  const signinDisclosure = useDisclosure();
 
   return (
-    <ModalContext.Provider value={modalDisclosure}>
-      <Box p="15px">
-        <Home />
-      </Box>
-    </ModalContext.Provider>
+    <NewAccountContext.Provider value={newAccountDisclosure}>
+      <SigninContext.Provider value={signinDisclosure}>
+        <Box p="15px">
+          <Home />
+        </Box>
+      </SigninContext.Provider>
+    </NewAccountContext.Provider>
   );
 };
 

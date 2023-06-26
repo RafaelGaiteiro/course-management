@@ -9,10 +9,13 @@ import {
 } from "@chakra-ui/react";
 
 import { useContext } from "react";
-import { ModalContext } from "../../../contexts/ModalContext";
+import { NewAccountContext } from "../../../contexts/NewAccountContext";
+import { SigninContext } from "../../../contexts/SigninContext";
 
 export const Header = () => {
-  const { onOpen } = useContext(ModalContext);
+  // Contexts
+  const { onOpen: openNewAccount } = useContext(NewAccountContext);
+  const { onOpen: openSignin } = useContext(SigninContext);
 
   return (
     <>
@@ -21,7 +24,14 @@ export const Header = () => {
           <Tab>Home</Tab>
           <Tab>Sobre</Tab>
           <Tab>Contato</Tab>
-          <Button leftIcon={<AddIcon />} colorScheme="teal" onClick={onOpen}>
+          <Button colorScheme="blue" onClick={openSignin}>
+            Entrar
+          </Button>
+          <Button
+            leftIcon={<AddIcon />}
+            colorScheme="teal"
+            onClick={openNewAccount}
+          >
             Abrir uma Conta
           </Button>
         </TabList>
@@ -31,6 +41,9 @@ export const Header = () => {
           </TabPanel>
           <TabPanel>
             <p>two!</p>
+          </TabPanel>
+          <TabPanel>
+            <p>three!</p>
           </TabPanel>
         </TabPanels>
       </Tabs>

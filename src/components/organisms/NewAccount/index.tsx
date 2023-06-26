@@ -16,10 +16,10 @@ import {
 } from "@chakra-ui/react";
 
 import { useContext } from "react";
-import { ModalContext } from "../../../contexts/ModalContext";
+import { NewAccountContext } from "../../../contexts/NewAccountContext";
 
 export const NewAccount = () => {
-  const { isOpen, onClose } = useContext(ModalContext);
+  const { isOpen, onClose } = useContext(NewAccountContext);
 
   return (
     <Box>
@@ -40,6 +40,13 @@ export const NewAccount = () => {
               <Box>
                 <FormLabel htmlFor="surname">Sobrenome</FormLabel>
                 <Input id="surname" placeholder="Insira o seu sobrenome" />
+              </Box>
+              <Box>
+                <FormLabel htmlFor="username">Nome de Usuário</FormLabel>
+                <Input
+                  id="username"
+                  placeholder="Insira o seu Nome de Usuário"
+                />
               </Box>
               <Box>
                 <FormLabel htmlFor="phone">Telefone</FormLabel>
