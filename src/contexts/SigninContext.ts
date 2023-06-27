@@ -1,6 +1,6 @@
-import React from "react";
+import { createContext } from "react";
 
-export const SigninContext = React.createContext({
+export const SigninContext = createContext({
   isOpen: false,
   onOpen: () => {},
   onClose: () => {},

@@ -1,6 +1,6 @@
-import React from "react";
+import { createContext } from "react";
 
-export const NewAccountContext = React.createContext({
+export const NewAccountContext = createContext({
   isOpen: false,
   onOpen: () => {},
   onClose: () => {},

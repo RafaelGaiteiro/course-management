@@ -10,21 +10,15 @@ import {
   DrawerOverlay,
   FormLabel,
   Input,
-  InputGroup,
-  InputRightElement,
   Stack,
 } from "@chakra-ui/react";
 
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { SigninContext } from "../../../contexts/SigninContext";
+import { InputPassword } from "../../atoms/InputPassword";
 
 export const Signin = () => {
   const { isOpen, onClose } = useContext(SigninContext);
-  const [show, setShow] = useState(false);
-
-  function handleClick() {
-    setShow(!show);
-  }
 
   return (
     <Box>
@@ -41,22 +35,7 @@ export const Signin = () => {
                 <FormLabel htmlFor="name">Usuário</FormLabel>
                 <Input id="name" placeholder="Insira o seu usuário" />
               </Box>
-              <Box>
-                <FormLabel htmlFor="password">Senha</FormLabel>
-                <InputGroup size="md">
-                  <Input
-                    id="password"
-                    pr="4.5rem"
-                    type={show ? "text" : "password"}
-                    placeholder="Insira a sua senha"
-                  />
-                  <InputRightElement width="4.5rem">
-                    <Button h="1.75rem" size="sm" onClick={handleClick}>
-                      {show ? "Hide" : "Show"}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
-              </Box>
+              <InputPassword label="Senha" placeholder="Insira a sua senha" />
             </Stack>
           </DrawerBody>
           <DrawerFooter borderTopWidth="1px">
