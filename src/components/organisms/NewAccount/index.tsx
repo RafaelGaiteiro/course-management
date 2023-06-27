@@ -1,3 +1,4 @@
+import { useEffect, useState, useContext } from "react";
 import {
   Alert,
   AlertIcon,
@@ -16,20 +17,43 @@ import {
   Stack,
   Textarea,
 } from "@chakra-ui/react";
-
-import { useContext, useState } from "react";
 import { NewAccountContext } from "../../../contexts/NewAccountContext";
 import { InputPassword } from "../../atoms/InputPassword";
+import { fetchCep } from "../../../services/fetchCep"; // Substitua pelo local onde seu fetchCep se encontra.
 
 export const NewAccount = () => {
   const { isOpen, onClose } = useContext(NewAccountContext);
   const [accountType, setAccountType] = useState("student");
+  const [cep, setCep] = useState("");
+  const [address, setAddress] = useState({
+    street: "",
+    neighborhood: "",
+    city: "",
+    state: "",
+  });
 
   const handleAccountTypeChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     setAccountType(event.target.value);
   };
+
+  useEffect(() => {
+    if (cep.length === 8) {
+      fetchCep(cep)
+        .then((data) => {
+          setAddress({
+            street: data.logradouro,
+            neighborhood: data.bairro,
+            city: data.localidade,
+            state: data.uf,
+          });
+        })
+        .catch((error) => {
+          console.error("Erro ao buscar CEP:", error);
+        });
+    }
+  }, [cep]);
 
   return (
     <Box>
@@ -40,7 +64,6 @@ export const NewAccount = () => {
           <DrawerHeader borderBottomWidth="1px">
             Criar uma nova conta
           </DrawerHeader>
-
           <DrawerBody>
             <Stack spacing="24px">
               <Box>
@@ -79,30 +102,65 @@ export const NewAccount = () => {
 
                   <Box>
                     <FormLabel htmlFor="phone">Telefone</FormLabel>
-                    <Input id="phone" placeholder="Insira o seu telefone" />
+                    <Input
+                      id="phone"
+                      type="number"
+                      placeholder="Insira o seu telefone"
+                    />
                   </Box>
                   <Box>
                     <FormLabel htmlFor="zipcode">CEP</FormLabel>
-                    <Input id="zipcode" placeholder="Insira o seu CEP" />
+                    <Input
+                      id="zipcode"
+                      type="number"
+                      placeholder="Insira o seu CEP"
+                      value={cep}
+                      onChange={(e) => setCep(e.target.value)}
+                    />
                   </Box>
                   <Box>
                     <FormLabel htmlFor="street">Rua</FormLabel>
-                    <Input id="street" placeholder="Insira a sua rua" />
+                    <Input
+                      id="street"
+                      placeholder="Insira a sua rua"
+                      value={address.street}
+                      onChange={(e) =>
+                        setAddress({ ...address, street: e.target.value })
+                      }
+                    />
                   </Box>
                   <Box>
                     <FormLabel htmlFor="neighborhood">Bairro</FormLabel>
                     <Input
                       id="neighborhood"
                       placeholder="Insira o seu bairro"
+                      value={address.neighborhood}
+                      onChange={(e) =>
+                        setAddress({ ...address, neighborhood: e.target.value })
+                      }
                     />
                   </Box>
                   <Box>
                     <FormLabel htmlFor="city">Cidade</FormLabel>
-                    <Input id="city" placeholder="Insira a sua cidade" />
+                    <Input
+                      id="city"
+                      placeholder="Insira a sua cidade"
+                      value={address.city}
+                      onChange={(e) =>
+                        setAddress({ ...address, city: e.target.value })
+                      }
+                    />
                   </Box>
                   <Box>
                     <FormLabel htmlFor="state">Estado</FormLabel>
-                    <Input id="state" placeholder="Insira o seu estado" />
+                    <Input
+                      id="state"
+                      placeholder="Insira o seu estado"
+                      value={address.state}
+                      onChange={(e) =>
+                        setAddress({ ...address, state: e.target.value })
+                      }
+                    />
                   </Box>
                   <Box>
                     <FormLabel htmlFor="country">País</FormLabel>

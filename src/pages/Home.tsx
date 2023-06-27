@@ -5,7 +5,7 @@ import { Signin } from "../components/organisms/Signin";
 
 export const Home = () => {
   return (
-    <Box>
+    <Box display="flex" justifyContent="center" alignItems="center">
       <Header />
       <NewAccount />
       <Signin />
